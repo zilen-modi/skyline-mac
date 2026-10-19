@@ -1,5 +1,57 @@
 // Single source of truth for every app on the desktop and the résumé.
 
+import { totalMonths, yearsPlus } from "@/lib/career";
+
+export const experiences = [
+  {
+    id: "distinction",
+    color: "#a78bfa",
+    company: "Distinction Dev",
+    location: "Ahmedabad, IN",
+    role: "Software Developer",
+    period: "Jul 2025 – Present",
+    current: true,
+    highlights: [
+      "Built a serverless ETL pipeline on AWS Lambda, SQS, S3 and DLQ with async processing, automatic retries and full error isolation.",
+      "Designed a decoupled data-ingestion layer with pluggable adapters for complex multi-valued transformations and MongoDB persistence.",
+      "Migrated a large ERP front end to Next.js with Redux Toolkit in a monorepo, and built internal tooling to verify the migration.",
+    ],
+  },
+  {
+    id: "bacancy",
+    color: "#38bdf8",
+    company: "Bacancy Technology",
+    location: "Ahmedabad, IN",
+    role: "Software Engineer",
+    period: "Aug 2023 – Jun 2025",
+    current: false,
+    highlights: [
+      "Built the auction module for a platform driving $100M+ revenue and 2.4M participants in its 2025 event.",
+      "Led front-end development across multiple client web apps with Next.js, TypeScript and React.",
+      "Trained and mentored 12+ junior developers, raising team productivity and code quality.",
+      "Enforced engineering best practices, achieving a 70% improvement in Lighthouse performance scores.",
+    ],
+  },
+  {
+    id: "simform",
+    color: "#34d399",
+    company: "Simform Solutions",
+    location: "Ahmedabad, IN",
+    role: "Software Engineer Trainee",
+    period: "Feb 2023 – Jul 2023",
+    current: false,
+    highlights: [
+      "Built a Kanban task scheduler with a Firebase real-time backend.",
+      "Set up GitHub Actions CI/CD deploying to AWS S3 + CloudFront for zero-downtime releases.",
+      "Improved React performance by 15% with memoisation patterns.",
+    ],
+  },
+];
+
+// Total experience, counted from the role dates above up to today.
+export const experienceMonths = totalMonths(experiences.map((e) => e.period));
+const years = yearsPlus(experienceMonths);
+
 export const profile = {
   name: "Zilen Modi",
   firstName: "Zilen",
@@ -7,7 +59,7 @@ export const profile = {
   headline: "Full Stack Engineer · data-heavy web apps & cloud systems",
   tagline: "I turn messy systems into fast, trustworthy products, from legacy ERPs to offline-first apps.",
   about: [
-    "Full Stack Engineer with 3.5+ years building enterprise products and cloud-native systems. I design serverless pipelines on AWS, ship fast Next.js frontends, and build the tooling that makes large migrations safe.",
+    `Full Stack Engineer with ${years} years building enterprise products and cloud-native systems. I design serverless pipelines on AWS, ship fast Next.js frontends, and build the tooling that makes large migrations safe.`,
     "I care about measurable results and systems people can trust: every answer cited, every check executable, every number traceable.",
   ],
   email: "zilenmodi@gmail.com",
@@ -21,7 +73,7 @@ export const profile = {
 };
 
 export const stats = [
-  { value: "3.5+", label: "Years experience" },
+  { value: years, label: "Years experience" },
   { value: "12+", label: "Developers mentored" },
   { value: "70%", label: "Lighthouse boost" },
   { value: "785+", label: "LeetCode solved" },
@@ -134,51 +186,6 @@ export const projects: Project[] = [
   },
 ];
 
-export const experiences = [
-  {
-    id: "distinction",
-    color: "#a78bfa",
-    company: "Distinction Dev",
-    location: "Ahmedabad, IN",
-    role: "Software Developer",
-    period: "Jul 2025 – Present",
-    current: true,
-    highlights: [
-      "Built a serverless ETL pipeline on AWS Lambda, SQS, S3 and DLQ with async processing, automatic retries and full error isolation.",
-      "Designed a decoupled data-ingestion layer with pluggable adapters for complex multi-valued transformations and MongoDB persistence.",
-      "Migrated a large ERP front end to Next.js with Redux Toolkit in a monorepo, and built internal tooling to verify the migration.",
-    ],
-  },
-  {
-    id: "bacancy",
-    color: "#38bdf8",
-    company: "Bacancy Technology",
-    location: "Ahmedabad, IN",
-    role: "Software Engineer",
-    period: "Aug 2023 – Jun 2025",
-    current: false,
-    highlights: [
-      "Built the auction module for a platform driving $100M+ revenue and 2.4M participants in its 2025 event.",
-      "Led front-end development across multiple client web apps with Next.js, TypeScript and React.",
-      "Trained and mentored 12+ junior developers, raising team productivity and code quality.",
-      "Enforced engineering best practices, achieving a 70% improvement in Lighthouse performance scores.",
-    ],
-  },
-  {
-    id: "simform",
-    color: "#34d399",
-    company: "Simform Solutions",
-    location: "Ahmedabad, IN",
-    role: "Software Engineer Trainee",
-    period: "Feb 2023 – Jul 2023",
-    current: false,
-    highlights: [
-      "Built a Kanban task scheduler with a Firebase real-time backend.",
-      "Set up GitHub Actions CI/CD deploying to AWS S3 + CloudFront for zero-downtime releases.",
-      "Improved React performance by 15% with memoisation patterns.",
-    ],
-  },
-];
 
 export const skills: { category: string; color: string; items: string[] }[] = [
   { category: "Frontend", color: "#a78bfa", items: ["React", "Next.js", "TypeScript", "three.js", "TanStack Query", "Redux Toolkit", "Tailwind"] },

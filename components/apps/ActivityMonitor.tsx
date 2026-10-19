@@ -4,23 +4,10 @@ import { useEffect, useMemo, useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { ArrowDown, ArrowUp } from "lucide-react";
 import { useWM, type AppProps } from "@/lib/store";
-import { experiences, projects, skills, stats, type Project } from "@/data/portfolio";
+import { experienceMonths, experiences, projects, skills, stats, type Project } from "@/data/portfolio";
+import { formatMonths as fmt, tenure } from "@/lib/career";
 
 // Everything here is counted from data/portfolio.ts: no decorative fake "live" metrics.
-
-const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
-function parseMonth(s: string, now: Date) {
-  if (/present/i.test(s)) return now.getFullYear() * 12 + now.getMonth();
-  const [m, y] = s.trim().split(/\s+/);
-  return Number(y) * 12 + MONTHS.indexOf(m.slice(0, 3).toLowerCase());
-}
-function tenure(period: string, now: Date) {
-  const [a, b] = period.split(/\s*[–-]\s*/);
-  const start = parseMonth(a, now);
-  const end = parseMonth(b ?? "Present", now);
-  return { start, end, months: end - start + 1 };
-}
-const fmt = (m: number) => (m >= 12 ? `${Math.floor(m / 12)} yr${m >= 24 ? "s" : ""}${m % 12 ? ` ${m % 12} mo` : ""}` : `${m} mo`);
 
 const usedIn = (tech: string) => projects.filter((p) => p.tech.some((t) => t.toLowerCase().startsWith(tech.toLowerCase()))).length;
 
@@ -43,7 +30,6 @@ export default function ActivityMonitor({ props }: { props: AppProps }) {
 
   const now = useMemo(() => new Date(), []);
   const roles = useMemo(() => experiences.map((e) => ({ ...e, ...tenure(e.period, now) })), [now]);
-  const totalMonths = roles.reduce((n, r) => n + r.months, 0);
 
   return (
     <div className="activity">
@@ -61,7 +47,7 @@ export default function ActivityMonitor({ props }: { props: AppProps }) {
         {tab === "projects" && <ProjectTable />}
       </div>
       <footer className="am-foot">
-        <div><span>Experience</span><strong>{fmt(totalMonths)}</strong></div>
+        <div><span>Experience</span><strong>{fmt(experienceMonths)}</strong></div>
         <div><span>Companies</span><strong>{experiences.length}</strong></div>
         <div><span>Projects</span><strong>{projects.length}</strong></div>
         <div><span>Skills tracked</span><strong>{skills.reduce((n, s) => n + s.items.length, 0)}</strong></div>
